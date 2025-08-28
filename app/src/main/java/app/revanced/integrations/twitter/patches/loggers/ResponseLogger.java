@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.FileOutputStream;
 import android.os.Environment;
 
 import app.revanced.integrations.twitter.Pref;
@@ -51,11 +50,7 @@ public class ResponseLogger {
             }
 
             File outputFile = new File(pikoDir, "Server-Response-Log.txt");
-
-            FileOutputStream outputStream = new FileOutputStream(outputFile, append);
-            outputStream.write(data);
-            outputStream.close();
-            return true;
+            return Utils.writeFile(outputFile,data,append);
         }catch (Exception e){
             Utils.logger(e.toString());
         }

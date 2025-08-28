@@ -7,6 +7,7 @@ import app.revanced.integrations.shared.Utils;
 
 public class Settings extends BaseSettings {
     public static final String SHARED_PREF_NAME = "piko_settings";
+    public static final String ACT_NAME = "activity_name";
 
     public static final StringSetting VID_PUBLIC_FOLDER = new StringSetting("vid_public_folder", "Movies");
     public static final StringSetting VID_SUBFOLDER = new StringSetting("vid_subfolder", "Twitter");
@@ -49,6 +50,10 @@ public class Settings extends BaseSettings {
     public static final BooleanSetting NATIVE_TRANSLATOR = new BooleanSetting("native_translator", true);
     public static final StringSetting NATIVE_TRANSLATOR_PROVIDERS = new StringSetting("native_translator_providers", "0");
     public static final StringSetting NATIVE_TRANSLATOR_LANG = new StringSetting("native_translator_language", "en");
+    public static final BooleanSetting NATIVE_READER_MODE = new BooleanSetting("native_reader_mode", true);
+    public static final BooleanSetting NATIVE_READER_MODE_TEXT_ONLY_MODE = new BooleanSetting("native_reader_mode_text_only_mode", false);
+    public static final BooleanSetting NATIVE_READER_MODE_HIDE_QUOTED_POST = new BooleanSetting("native_reader_mode_hide_quoted_post", false);
+    public static final BooleanSetting NATIVE_READER_MODE_NO_GROK = new BooleanSetting("native_reader_mode_no_grok", false);
 
     public static final BooleanSetting TIMELINE_DISABLE_AUTO_SCROLL = new BooleanSetting("timeline_disable_auto_scroll", true);
     public static final BooleanSetting TIMELINE_SHOW_SOURCE_LABEL = new BooleanSetting("timeline_show_source_label", false);

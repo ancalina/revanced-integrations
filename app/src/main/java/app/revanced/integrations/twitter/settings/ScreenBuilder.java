@@ -372,6 +372,41 @@ public class ScreenBuilder {
             );
 
         }
+
+        category = preferenceCategory(strRes("piko_title_native_reader_mode"));
+
+        if (SettingsStatus.nativeReaderMode) {
+            addPreference(category,
+                    helper.switchPreference(
+                            strRes("piko_title_native_reader_mode"),
+                            "",
+                            Settings.NATIVE_READER_MODE
+                    )
+            );
+
+            addPreference(category,
+                    helper.switchPreference(
+                            strRes("piko_native_reader_mode_pref_text_only_mode"),
+                            "",
+                            Settings.NATIVE_READER_MODE_TEXT_ONLY_MODE
+                    )
+            );
+            addPreference(category,
+                    helper.switchPreference(
+                            strRes("piko_native_reader_mode_pref_hide_quoted_posts"),
+                            "",
+                            Settings.NATIVE_READER_MODE_HIDE_QUOTED_POST
+                    )
+            );
+            addPreference(category,
+                    helper.switchPreference (
+                            strRes("piko_native_reader_mode_pref_no_grok"),
+                            "",
+                            Settings.NATIVE_READER_MODE_NO_GROK
+                    )
+            );
+
+        }
     }
 
     public void buildMiscSection(boolean buildCategory){

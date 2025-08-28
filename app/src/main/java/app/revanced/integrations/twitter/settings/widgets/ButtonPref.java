@@ -107,7 +107,7 @@ public class ButtonPref extends Preference {
 
                     if (fragment != null) {
                         fragment.setArguments(bundle);
-                        ActivityHook.startFragment((Activity) context, fragment, true);
+                        ActivityHook.startFragment((Activity) context, key,fragment, true);
                     }
                 } catch (Exception e) {
                     Utils.logger(e);
