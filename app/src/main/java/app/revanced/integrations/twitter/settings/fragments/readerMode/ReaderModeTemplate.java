@@ -77,7 +77,7 @@ public class ReaderModeTemplate {
             "    --quoted-text: #9dbadb;\n" +
             "    --footer-border: #32475b;\n" +
             "    --footer-text: #73859a;\n" +
-            "    --link-color: #0f3c89ff;\n" +
+            "    --link-color: #116fff;\n" +
             "    --author-border: #32475b;\n" +
             "    --author-desc: #84a2c3;\n" +
             "    --author-handle: #7c8a9e;\n" +

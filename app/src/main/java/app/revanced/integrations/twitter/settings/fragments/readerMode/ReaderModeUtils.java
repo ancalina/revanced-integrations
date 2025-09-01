@@ -26,6 +26,7 @@ import java.net.MalformedURLException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import app.revanced.integrations.twitter.settings.fragments.readerMode.ReaderModeTemplate;
+import app.revanced.integrations.twitter.model.Tweet;
 
 public class ReaderModeUtils {
 
@@ -100,14 +101,9 @@ public class ReaderModeUtils {
                 "}";
     }
 
-    private static String getTweetId(Object tweet)
-            throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Long tweetId = (Long) tweet.getClass().getDeclaredMethod("getId").invoke(tweet);
-        return String.valueOf(tweetId);
-    }
 
     public static void launchReaderMode(Context activity, Object tweet) throws Exception {
-        String tweetId = getTweetId(tweet);
+        String tweetId = ""+new Tweet(tweet).getTweetId();
         ActivityHook.startReaderMode(tweetId);
         return;
     }
@@ -149,8 +145,12 @@ public class ReaderModeUtils {
 
     private static File cacheFileDir(String tweetId) {
         File cacheDir = ctx.getCacheDir();
-        return new File(cacheDir, THREADS_KEY + "_" + tweetId + ".html");
-        // return new File(cacheDir, THREADS_KEY + ".json");
+        File threadsDir = new File(cacheDir, "Threads");
+
+        if (!threadsDir.exists()) {
+            threadsDir.mkdirs();
+        }
+        return new File(threadsDir, THREADS_KEY + "_" + tweetId + ".html");
     }
 
     private static boolean writeCacheFile(String tweetId, String data) {

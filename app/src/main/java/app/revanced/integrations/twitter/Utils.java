@@ -1,5 +1,6 @@
 package app.revanced.integrations.twitter;
 
+import app.revanced.integrations.twitter.model.Debug;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
@@ -33,6 +34,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import java.lang.StackTraceElement;
 
 @SuppressWarnings("unused")
 public class Utils {
@@ -332,6 +334,18 @@ public class Utils {
         return theme;
     }
 
+    public static boolean pikoWriteFile(String fileName,String data,boolean append){
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File pikoDir = new File(downloadsDir, "Piko");
+
+        if (!pikoDir.exists()) {
+            pikoDir.mkdirs();
+        }
+
+        File outputFile = new File(pikoDir, fileName);
+        return writeFile(outputFile,data.getBytes(),append);
+    }
+
     public static boolean writeFile(File fileName, byte[] data, boolean append) {
         try {
             FileOutputStream outputStream = new FileOutputStream(fileName, append);
@@ -378,8 +392,27 @@ public class Utils {
         app.revanced.integrations.shared.Utils.showToastShort(msg);
     }
 
-    public static void logger(Object j) {
-        Log.d("piko", j.toString());
+    public static void logger(Object e) {
+        String logName = "piko";
+        Log.d(logName, String.valueOf(e)+"\n");
+        if (e instanceof Exception) {
+            Exception ex = (Exception) e;
+        StackTraceElement[] stackTraceElements = ex.getStackTrace();
+            for (StackTraceElement element : stackTraceElements) {
+                Log.d(logName, "Exception occurred at line " + element.getLineNumber() + " in " + element.getClassName()
+                        + "." + element.getMethodName());
+            }
+        }
+    }
+
+    /*** THIS FUNCTION SHOULD BE USED ONLY WHILE DEVELOPMENT ***/
+    public static void debugClass(Object obj) {
+        Debug cls = new Debug(obj);
+        try{
+        cls.describeClass();
+        }catch(Exception e){
+            logger(e);
+        }
     }
 
 }

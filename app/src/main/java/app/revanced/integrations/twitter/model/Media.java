@@ -1,0 +1,28 @@
+package app.revanced.integrations.twitter.model;
+
+import app.revanced.integrations.twitter.Utils;
+
+public class Media {
+    // 0-img, 1-video
+    public int type;
+    public String url;
+    public String ext;
+
+    public Media(int type, String url, String ext) {
+        this.type = type;
+        this.url = url;
+        this.ext = ext;
+    }
+
+    @Override
+    public String toString() {
+
+        try {
+            return "Media [type=" + type + ", url=" + url + ", ext=" + ext + "]";
+        } catch (Exception e) {
+            Utils.logger(e);
+            return e.getMessage();
+        }
+    }
+
+}

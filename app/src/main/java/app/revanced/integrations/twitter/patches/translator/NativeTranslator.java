@@ -17,60 +17,16 @@ import app.revanced.integrations.twitter.patches.translator.providers.GTranslate
 import app.revanced.integrations.twitter.patches.translator.providers.GTranslateV2;
 import app.revanced.integrations.twitter.Pref;
 
+import app.revanced.integrations.twitter.model.Tweet;
+
 public class NativeTranslator {
 
-    private static String getLang(Object tweet){
+    public static void translate(Context activity, Object tweetObj) throws Exception {
         try{
-
-            Field tweetInfofield = tweet.getClass().getDeclaredField(Constants.getTweetInfoField());
-            tweetInfofield.setAccessible(true);
-            Object tweetInfo = tweetInfofield.get(tweet);
-
-            Field langfield = tweetInfo.getClass().getDeclaredField(Constants.getLangField());
-            langfield.setAccessible(true);
-            String langShort = (String) langfield.get(tweetInfo);
-            return Constants.getLanguageNameFromLocale(langShort);
-        }catch (Exception ex){
-            Utils.toast("Language detection failed: " + ex.getMessage());
-            Utils.logger(ex.getMessage());
-        }
-        return "xxx";
-
-    }
-
-    private static String getShortText(Object tweet) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Object instance = tweet.getClass().getDeclaredMethod(Constants.getShortTextMethodName()).invoke(tweet);
-        Object text = instance.getClass().getDeclaredMethod("getText").invoke(instance);
-        return text!=null?(String) text : "";
-    }
-
-    private static String getLongText(Object tweet) throws ClassNotFoundException,NoSuchFieldException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Object instance = tweet.getClass().getDeclaredMethod(Constants.getLongTextMethodName()).invoke(tweet);
-        if(instance==null){
-            return "";
-        }
-        Field field = instance.getClass().getDeclaredField(Constants.getLongTextFieldName());
-        field.setAccessible(true);
-        Object text = field.get(instance);
-        return text!=null?(String) text : "";
-    }
-
-    private static String getText(Object tweet) throws Exception{
-        String text = getLongText(tweet);
-        if(text.equals("")){
-            text = getShortText(tweet);
-        }
-        if(text.length()>0){
-            int mediaIndex = text.indexOf("pic.x.com");
-            if(mediaIndex>0) text = text.substring(0,mediaIndex);
-        }
-        return text;
-    }
-
-    public static void translate(Context activity, Object tweet) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException, ClassNotFoundException {
         String text = "";
+        Tweet tweet = new Tweet(tweetObj);
         try {
-            text = getText(tweet);
+            text = tweet.getText();
         }catch (Exception e){
             text = e.toString();
         }
@@ -83,7 +39,7 @@ public class NativeTranslator {
         }
 
         String toLang = Pref.translatorLanguage();
-        String tweetLang = getLang(tweet);
+        String tweetLang = tweet.getTweetLang();
 
         // If both the tweet language and requested language are same.
         if(tweetLang.toLowerCase() == toLang.toLowerCase()){
@@ -121,5 +77,6 @@ public class NativeTranslator {
                 Utils.toast("Translation failed: " + e.getMessage());
             }
         });
+    }catch (Exception ex){Utils.logger(ex);}
     }
 }

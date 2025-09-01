@@ -3,9 +3,7 @@ package app.revanced.integrations.twitter.patches.translator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.widget.LinearLayout;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,25 +33,5 @@ public class Constants {
         } catch (Exception e) {
             return "xxx";
         }
-    }
-
-    protected static String getTweetInfoField(){
-        return "";
-    }
-
-    protected static String getLangField(){
-        return "";
-    }
-
-    protected static String getShortTextMethodName(){
-        return "";
-    }
-
-    protected static String getLongTextMethodName(){
-        return "";
-    }
-
-    protected static String getLongTextFieldName(){
-        return "";
     }
 }
