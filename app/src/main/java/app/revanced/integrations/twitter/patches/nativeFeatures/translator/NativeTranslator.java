@@ -1,4 +1,4 @@
-package app.revanced.integrations.twitter.patches.translator;
+package app.revanced.integrations.twitter.patches.nativeFeatures.translator;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,9 +12,9 @@ import java.util.List;
 
 import app.revanced.integrations.twitter.Utils;
 import app.revanced.integrations.shared.StringRef;
-import app.revanced.integrations.twitter.patches.translator.providers.Translate;
-import app.revanced.integrations.twitter.patches.translator.providers.GTranslate;
-import app.revanced.integrations.twitter.patches.translator.providers.GTranslateV2;
+import app.revanced.integrations.twitter.patches.nativeFeatures.translator.providers.Translate;
+import app.revanced.integrations.twitter.patches.nativeFeatures.translator.providers.GTranslate;
+import app.revanced.integrations.twitter.patches.nativeFeatures.translator.providers.GTranslateV2;
 import app.revanced.integrations.twitter.Pref;
 
 import app.revanced.integrations.twitter.model.Tweet;

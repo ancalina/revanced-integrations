@@ -1,4 +1,4 @@
-package app.revanced.integrations.twitter.patches;
+package app.revanced.integrations.twitter.patches.nativeFeatures;
 
 import android.app.AlertDialog;
 import android.content.Context;

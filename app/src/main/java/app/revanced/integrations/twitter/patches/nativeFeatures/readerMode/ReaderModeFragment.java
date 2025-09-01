@@ -1,4 +1,4 @@
-package app.revanced.integrations.twitter.settings.fragments.readerMode;
+package app.revanced.integrations.twitter.patches.nativeFeatures.readerMode;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

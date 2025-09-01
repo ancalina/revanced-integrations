@@ -1,4 +1,4 @@
-package app.revanced.integrations.twitter.settings.fragments.readerMode;
+package app.revanced.integrations.twitter.patches.nativeFeatures.readerMode;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -13,33 +13,25 @@ import org.json.JSONArray;
 
 public class ReaderModeTemplate {
 
-  private static final String GROK_ANALYSE_LINK = "https://x.com/i/grok?text=";
   private static final String GROK_ANALYSE_THREAD = StringRef.str("piko_native_reader_mode_grok_thread");
   private static final String GROK_ANALYSE_AUTHOR = StringRef.str("piko_native_reader_mode_grok_author");
   private static final String TITLE_SOURCE = StringRef.str("piko_native_reader_mode_source");
   private static final String TITLE_PUBLISHED = StringRef.str("piko_native_reader_mode_published");
   private static final String TITLE_TOT_POSTS = StringRef.str("piko_native_reader_mode_total_post");
 
-  private static String getGrokIcon(String text) {
-    return "<span style=\"display: inline-flex; align-items: center; gap: 0.6em;\">\n" +
-        "<!-- Circular black background, white Grok SVG -->\n" +
-        "<span style=\"background: #111; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%;\">\n"
-        +
-        "  <svg width=\"24\" height=\"24\" viewBox=\"0 0 33 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-label=\"Grok\">\n"
-        +
-        "    <path fill=\"#fff\" d=\"M12.745 20.54l10.97-8.19c.539-.4 1.307-.244 1.564.38 1.349 3.288.746 7.241-1.938 9.955-2.683 2.714-6.417 3.31-9.83 1.954l-3.728 1.745c5.347 3.697 11.84 2.782 15.898-1.324 3.219-3.255 4.216-7.692 3.284-11.693l.008.009c-1.351-5.878.332-8.227 3.782-13.031L33 0l-4.54 4.59v-.014L12.743 20.544zm-2.263 1.987c-3.837-3.707-3.175-9.446.1-12.755 2.42-2.449 6.388-3.448 9.852-1.979l3.72-1.737c-.67-.49-1.53-1.017-2.515-1.387-4.455-1.854-9.789-.931-13.41 2.728-3.483 3.523-4.579 8.94-2.697 13.561 1.405 3.454-.899 5.898-3.22 8.364C1.49 30.2.666 31.074 0 32l10.478-9.466\"/>\n"
-        +
-        "  </svg>\n" +
-        "</span>\n" +
-        "<span>" + text + "</span>\n" +
-        "</span>";
+  private static String getGrokIcon(String slug,String text) {
+    return "<a href=\"https://x.com/i/grok?text="+slug+"\" target=\"_blank\" rel=\"noopener\" class=\"grok-button\">\n"+
+              "<span class=\"grok-icon\">\n"+
+                "<svg width=\"18\" height=\"18\" viewBox=\"0 0 33 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-label=\"Grok\">\n"+
+                  "<path fill=\"#fff\" d=\"M12.745 20.54l10.97-8.19c.539-.4 1.307-.244 1.564.38 1.349 3.288.746 7.241-1.938 9.955-2.683 2.714-6.417 3.31-9.83 1.954l-3.728 1.745c5.347 3.697 11.84 2.782 15.898-1.324 3.219-3.255 4.216-7.692 3.284-11.693l.008.009c-1.351-5.878.332-8.227 3.782-13.031L33 0l-4.54 4.59v-.014L12.743 20.544zm-2.263 1.987c-3.837-3.707-3.175-9.446.1-12.755 2.42-2.449 6.388-3.448 9.852-1.979l3.72-1.737c-.67-.49-1.53-1.017-2.515-1.387-4.455-1.854-9.789-.931-13.41 2.728-3.483 3.523-4.579 8.94-2.697 13.561 1.405 3.454-.899 5.898-3.22 8.364C1.49 30.2.666 31.074 0 32l10.478-9.466\"/>\n"+
+                "</svg>\n"+
+              "</span>\n"+
+              "<span class=\"grok-text\">"+text+"</span>\n"+
+            "</a>\n";
   }
 
   private static String getColorScheme() {
-    int theme = Utils.getTheme();
-    switch (theme) {
-      case 1: {
-        return ":root {\n" +
+        return ":root{\n" +
             "    --bg-body: #ffffff;\n" +
             "    --bg-container: #fefefe;\n" +
             "    --text-primary: #262626;\n" +
@@ -59,56 +51,48 @@ public class ReaderModeTemplate {
             "    --author-border: #d9d9d9;\n" +
             "    --author-desc: #5e6366;\n" +
             "    --author-handle: #65676b;\n" +
-            "    }";
-      }
-      case 2: {
-        return ":root {\n" +
-            "    --bg-body: #15202b;\n" +
-            "    --bg-container: #192734;\n" +
-            "    --text-primary: #a3b1c2;\n" +
-            "    --text-secondary: #7c8a9e;\n" +
-            "    --text-accent: #6ea7ff;\n" +
-            "    --border-color: #32475b;\n" +
-            "    --media-shadow: rgba(44, 79, 131, 0.67);\n" +
-            "    --highlight-bg: #24436e;\n" +
-            "    --highlight-color: #afd1ff;\n" +
-            "    --quoted-bg: #16202A;\n" +
-            "    --quoted-border: #2b5285ff;\n" +
-            "    --quoted-text: #9dbadb;\n" +
-            "    --footer-border: #32475b;\n" +
-            "    --footer-text: #73859a;\n" +
-            "    --link-color: #116fff;\n" +
-            "    --author-border: #32475b;\n" +
-            "    --author-desc: #84a2c3;\n" +
-            "    --author-handle: #7c8a9e;\n" +
+            "    }\n"+
+            ":root.dark {\n" +
+            "     --bg-body: #121212;\n" +
+            "     --bg-container: #1e1e1e;\n" +
+            "     --text-primary: #e0e0e0;\n" +
+            "     --text-secondary: #8a9ba8;\n" +
+            "     --text-accent: #80c8ff;\n" +
+            "     --border-color: #333;\n" +
+            "     --media-shadow: rgba(65, 105, 225, 0.8);\n" +
+            "     --highlight-bg: #335577;\n" +
+            "     --highlight-color: #c1d9ff;\n" +
+            "     --quoted-bg: #222d3b;\n" +
+            "     --quoted-border: #5a79a0;\n" +
+            "     --quoted-text: #aac6ff;\n" +
+            "     --footer-border: #333;\n" +
+            "     --footer-text: #6a7b8d;\n" +
+            "     --link-color: #7ab8ff;\n" +
+            "     --link-hover: underline;\n" +
+            "     --author-border: #2f3943;\n" +
+            "     --author-desc: #89a1b0;\n" +
+            "}\n"+
+            ":root.dim {\n" +
+                "--bg-body: #16202a	;\n"+
+                "--bg-container: #192734;\n"+
+                "--text-primary: #a3b1c2;\n"+
+                "--text-secondary: #7c8a9e;\n"+
+                "--text-accent: #6ea7ff;\n"+
+                "--border-color: #32475b;\n"+
+                "--media-shadow: rgba(77, 117, 179, 0.67);\n"+
+                "--highlight-bg: #24436e;\n"+
+                "--highlight-color: #afd1ff;\n"+
+                "--quoted-bg: #223544;\n"+
+                "--quoted-border: #5178ab;\n"+
+                "--quoted-text: #9dbadb;\n"+
+                "--footer-border: #32475b;\n"+
+                "--footer-text: #73859a;\n"+
+                "--link-color: #0f3c89ff;\n"+
+                "--author-border: #32475b;\n"+
+                "--author-desc: #84a2c3;\n"+
+                "--author-handle: #7c8a9e;\n"+
             "}\n";
       }
-      default: {
-        return ":root {\n" +
-            "--bg-body: #ffffff;\n" +
-            "--bg-container: #fefefe;\n" +
-            "--text-primary: #262626;\n" +
-            "--text-secondary: #606770;\n" +
-            "--text-accent: #1a73e8;\n" +
-            "--border-color: #dcdcdc;\n" +
-            "--media-shadow: rgba(26, 115, 232, 0.3);\n" +
-            "--highlight-bg: #e1ecff;\n" +
-            "--highlight-color: #1a56db;\n" +
-            "--quoted-bg: #f5f8ff;\n" +
-            "--quoted-border: #a3b4d9;\n" +
-            "--quoted-text: #38456d;\n" +
-            "--footer-border: #e1e4e8;\n" +
-            "--footer-text: #70757a;\n" +
-            "--link-color: #1a73e8;\n" +
-            "--link-hover: underline;\n" +
-            "--author-border: #d9d9d9;\n" +
-            "--author-desc: #5e6366;\n" +
-            "--author-handle: #65676b;\n" +
-            "}\n";
-      }
-    }
-
-  }
 
   public static String getHTMLHeader() {
 
@@ -241,19 +225,38 @@ public class ReaderModeTemplate {
         "  color: var(--footer-text);\n" +
         "  transition: border-color 0.3s ease, color 0.3s ease;\n" +
         "}\n" +
-
         "a {\n" +
         "  color: var(--link-color);\n" +
         "  text-decoration: none;\n" +
         "  word-break: break-all;\n" +
         "  transition: color 0.3s ease;\n" +
         "}\n" +
+            ".article-footer a {\n" +
+            "  font-size: 1rem;\n" +
+            "}\n"+
 
         "@media (max-width: 700px) {\n" +
         "  .news-container {\n" +
         "    padding: 1.2rem 0.8rem;\n" +
         "  }\n" +
-        "}\n";
+        "}\n"+
+        ".grok-button {\n" +
+            "    display: inline-flex;\n" +
+            "    align-items: center;\n" +
+            "    gap: 0.5em;\n" +
+            "    padding: 0.3em 1.2em;\n" +
+            "    background-color:#000;\n" +
+            "    border-radius: 9999px; /* oval shape */\n" +
+            "    color: white;\n" +
+            "    font-weight: 700;\n" +
+            "    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n" +
+            "    font-size: 2rem;\n" +
+            "    text-decoration: none;\n" +
+            "    cursor: pointer;\n" +
+            "  }\n" +
+            "  .grok-icon svg {\n" +
+            "    display: block;\n" +
+            "  }";
 
     return "<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" /><style>\n\n" + colorScheme
         + "\n\n" + rest + "\n\n</style></head>";
@@ -266,18 +269,17 @@ public class ReaderModeTemplate {
         "     <div class=\"author-details\">\n" +
         "         <span class=\"name\">{name}</span>\n" +
         "         <a href=\"https://x.com/{username}\" target=\"_blank\">@{username}</a>\n" +
-        "<a class=\"grokStub\" href=\"" + GROK_ANALYSE_LINK + "@{username}\" target=\"_blank\">\n" +
-        getGrokIcon(GROK_ANALYSE_AUTHOR) + "</a> ·\n" +
-        "     </div>\n" +
-        " </div>\n" +
+        "    {grokUser}\n"+
+        " </div></div>\n" +
         " <div class=\"news-header\">\n" +
         "     <div class=\"news-meta\">\n" +
         TITLE_PUBLISHED + ": {formattedDate} · " + TITLE_SOURCE
-        + ": <a href=\"https://x.com/{username}/status/{tweetId}\" target=\"_blank\">X Thread</a>\n"
+        + ": <a href=\"{postLink}\" target=\"_blank\">X Thread</a>\n"
         +
         "     </div>\n" +
         "     <div class=\"news-meta\">\n" +
         TITLE_TOT_POSTS + ": {totalTweets}\n" +
+            "{grokPost}\n"+
         "     </div>\n" +
         " </div>\n";
 
@@ -286,6 +288,7 @@ public class ReaderModeTemplate {
     String name = author.getString("name");
     String username = author.getString("username");
     String profilepic = author.getString("profileImageUrl");
+    String postLink = "https://x.com/"+username+"/status/"+tweetId;
 
     long createdAt = thread.getLong("createdAt");
     LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(createdAt), ZoneId.systemDefault());
@@ -299,14 +302,20 @@ public class ReaderModeTemplate {
         .replace("{name}", name)
         .replace("{profilepic}", profilepic)
         .replace("{tweetId}", tweetId)
+        .replace("{postLink}", postLink)
+        .replace("{grokUser}", getGrokIcon("@"+username,GROK_ANALYSE_AUTHOR))
+        .replace("{grokPost}", getGrokIcon(postLink,GROK_ANALYSE_THREAD))
         .replace("{totalTweets}", String.valueOf(totalTweets));
     return html;
 
   }
 
-  private static String getHTMLMedia(int type, JSONObject media) throws Exception {
+  private static String[] getHTMLMedia(int type, JSONObject media) throws Exception {
     String html = "<div class=\"media\">{mediaTag}</div><br/>";
     String mediaTag = "";
+    // required to remove pic url.
+    String tco = media.getString("url");
+
     // 0= img, 1 = vid
     if (type == 0) {
       var src = media.getString("src");
@@ -321,13 +330,29 @@ public class ReaderModeTemplate {
           .replace("{videoUrl}", videoUrl);
 
     }
-    return html.replace("{mediaTag}", mediaTag);
+    return new String[]{tco,html.replace("{mediaTag}", mediaTag)};
+  }
+
+  private static String sanitizeText(JSONObject tweet)throws Exception{
+    String text = tweet.getString("text");
+    if (!tweet.isNull("urls")) {
+      JSONArray urls = tweet.getJSONArray("urls");
+      for(int i=0;i<urls.length();i++){
+        JSONObject url = urls.getJSONObject(i);
+        String tco = url.getString("url");
+        String expUrl = url.getString("expandedUrl");
+        text= text.replace(tco,expUrl);
+      }
+
+    }
+    return text;
   }
 
   private static String getHTMLTweet(JSONObject tweet, boolean quoted)
       throws Exception {
     String html = "{content}";
     String content = "";
+    String text = "";
 
     if (quoted) {
       String tweetId = tweet.getString("id");
@@ -336,6 +361,7 @@ public class ReaderModeTemplate {
       String username = author.getString("username");
       html = "<div class=\"quoted-section\">\n" +
           "     <span class=\"quoted-author\">{name} (@{username})</span><br/>\n" +
+              "{text}\n"+
           "     {content}\n" +
           "<!--      <a href=\"https://x.com/{username}/status/{tweetId}\" target=\"_blank\">Full quoted post</a>-->\n"
           +
@@ -346,14 +372,17 @@ public class ReaderModeTemplate {
     }
 
     if (!tweet.isNull("text")) {
-      content = tweet.getString("text") + "<br/>";
+
+      content = sanitizeText(tweet) + "<br/>";
     }
 
     if (!tweet.isNull("photos")) {
       JSONArray images = tweet.getJSONArray("photos");
       for (int i = 0; i < images.length(); i++) {
         JSONObject item = images.getJSONObject(i);
-        content += getHTMLMedia(0, item);
+        String[] cnt = getHTMLMedia(0, item);
+        String tco = cnt[0];
+        content = content.replace(tco,"")+cnt[1];
       }
     }
 
@@ -361,7 +390,9 @@ public class ReaderModeTemplate {
       JSONArray videos = tweet.getJSONArray("media");
       for (int i = 0; i < videos.length(); i++) {
         JSONObject item = videos.getJSONObject(i);
-        content += getHTMLMedia(1, item);
+        String[] cnt = getHTMLMedia(1, item);
+        String tco = cnt[0];
+        content = text.replace(tco,"")+cnt[1];
       }
     }
 
@@ -375,15 +406,14 @@ public class ReaderModeTemplate {
 
   private static String getHTMLFooter(JSONObject thread) throws Exception {
     String tweetId = String.valueOf(thread.getLong("id"));
-    String grokLink = GROK_ANALYSE_LINK + "https://x.com/dummy/status/" + tweetId;
+    String postLink = "https://x.com/dummy/status/" + tweetId;
 
     String template = "<div class=\"article-footer\">\n" +
-        "<a class=\"grokStub\" href=\"{grokit}\" target=\"_blank\">" + getGrokIcon(GROK_ANALYSE_THREAD) + "</a> ·\n" +
+            getGrokIcon(postLink,GROK_ANALYSE_THREAD)+"\n"+
         "    <a href=\"https://twitter-thread.com/t/{tweetId}\" target=\"_blank\">twitter-thread.com</a>\n" +
         "</div>\n";
 
     return template
-        .replace("{grokit}", grokLink)
         .replace("{tweetId}", tweetId);
   }
 

@@ -1,4 +1,4 @@
-package app.revanced.integrations.twitter.patches.translator.providers;
+package app.revanced.integrations.twitter.patches.nativeFeatures.translator.providers;
 
 import android.os.AsyncTask;
 import java.io.BufferedReader;

@@ -13,8 +13,8 @@ import androidx.appcompat.widget.Toolbar;
 import app.revanced.integrations.shared.Utils;
 import app.revanced.integrations.twitter.settings.featureflags.FeatureFlagsFragment;
 import app.revanced.integrations.twitter.settings.fragments.*;
-import app.revanced.integrations.twitter.settings.fragments.readerMode.ReaderModeFragment;
-import app.revanced.integrations.twitter.settings.fragments.readerMode.ReaderModeUtils;
+import app.revanced.integrations.twitter.patches.nativeFeatures.readerMode.ReaderModeFragment;
+import app.revanced.integrations.twitter.patches.nativeFeatures.readerMode.ReaderModeUtils;
 import static app.revanced.integrations.shared.Utils.context;
 @SuppressWarnings("deprecation")
 public class ActivityHook {

@@ -7,7 +7,7 @@ import app.revanced.integrations.twitter.settings.Settings;
 import app.revanced.integrations.shared.Utils;
 import android.preference.Preference;
 import java.util.Locale;
-import app.revanced.integrations.twitter.patches.translator.Constants;
+import app.revanced.integrations.twitter.patches.nativeFeatures.translator.Constants;
 //import java.util.*;
 
 public class ListPref extends ListPreference {

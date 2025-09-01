@@ -1,13 +1,9 @@
-package app.revanced.integrations.twitter.settings.fragments.readerMode;
+package app.revanced.integrations.twitter.patches.nativeFeatures.readerMode;
 
 import android.content.Context;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import app.revanced.integrations.twitter.settings.ActivityHook;
 import app.revanced.integrations.twitter.Utils;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import app.revanced.integrations.twitter.Pref;
 
 import java.io.File;
@@ -25,8 +21,8 @@ import java.net.MalformedURLException;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
-import app.revanced.integrations.twitter.settings.fragments.readerMode.ReaderModeTemplate;
 import app.revanced.integrations.twitter.model.Tweet;
+import app.revanced.integrations.twitter.patches.nativeFeatures.readerMode.ReaderModeTemplate;
 
 public class ReaderModeUtils {
 
@@ -87,17 +83,21 @@ public class ReaderModeUtils {
         Boolean textOnlyMode = Pref.hideNativeReaderPostTextOnlyMode();
         Boolean hideQuotedPosts = Pref.hideNativeReaderHideQuotedPosts();
         Boolean noGrok = Pref.hideNativeReaderNoGrok();
-        return "if(" + hideQuotedPosts + "){\n" +
+        int theme = Utils.getTheme();
+        String themeClass = (theme == 0?"":(theme==1?"dark":"dim"));
+        return "document.body.className='';\n" +
+                "\ndocument.body.classList.add(\""+themeClass+"\");\n"+
+                "if(" + hideQuotedPosts + "){\n" +
                 "var nodes = document.querySelectorAll(\".quoted-section\");\n" +
-                "nodes.forEach(qp=>qp.style.display='none');\n" +
+                "nodes.forEach(n=>n.style.display='none');\n" +
                 "}\n" +
                 "if(" + textOnlyMode + "){\n" +
                 "var nodes = document.querySelectorAll(\".media\");\n" +
-                "nodes.forEach(qp=>qp.style.display='none');\n" +
+                "nodes.forEach(n=>n.style.display='none');\n" +
                 "}\n" +
                 "if(" + noGrok + "){\n" +
-                "var nodes = document.querySelectorAll(\".grokStub\");\n" +
-                "nodes.forEach(qp=>qp.style.display='none');\n" +
+                "var nodes = document.querySelectorAll(\".grok-button\");\n" +
+                "nodes.forEach(n=>n.style.display='none');\n" +
                 "}";
     }
 
