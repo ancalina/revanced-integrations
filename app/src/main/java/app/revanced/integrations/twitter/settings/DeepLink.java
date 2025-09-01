@@ -5,7 +5,6 @@ import android.os.Bundle;
 import java.util.List;
 import android.net.Uri;
 import  app.revanced.integrations.twitter.Utils;
-import app.revanced.integrations.shared.settings.BooleanSetting;
 
 @SuppressWarnings("deprecation")
 public class DeepLink {
@@ -27,7 +26,7 @@ public class DeepLink {
 
             boolean isPiko = mainPath.equals("piko") || mainPath.equals("pikosettings");
 
-            BooleanSetting key = null;
+            String key = null;
             if(segmentSize == 2 && lastSegment.equals("settings")){
                 Utils.startXSettings();
                 return true;
@@ -42,7 +41,7 @@ public class DeepLink {
                     Bundle bundle = new Bundle();
                     bundle.putString(bundleFlagNameKey, bundleFlagName);
                     bundle.putBoolean(bundleFlagValueKey, bundleFlagValue);
-                    ActivityHook.startActivity(key.key,bundle);
+                    ActivityHook.startActivity(key,bundle);
                     return true;
 
                 }
@@ -70,7 +69,7 @@ public class DeepLink {
                 }
             }
             if(key!=null){
-                ActivityHook.startActivity(key.key);
+                ActivityHook.startActivity(key);
                 return true;
             }
         }catch(Exception e){

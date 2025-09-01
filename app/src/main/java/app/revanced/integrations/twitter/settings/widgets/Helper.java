@@ -46,15 +46,15 @@ public class Helper {
         return preference;
     }
 
-    public Preference buttonPreference(String title, String summary, BooleanSetting setting) {
+    public Preference buttonPreference(String title, String summary, String setting) {
         ButtonPref preference = new ButtonPref(context);
         preference.setTitle(title);
         preference.setSummary(summary);
-        preference.setKey(setting.key);
+        preference.setKey(setting);
         return preference;
     }
 
-    public Preference buttonPreference(String title, String summary, BooleanSetting setting, @Nullable String iconName, @Nullable String color) {
+    public Preference buttonPreference(String title, String summary, String setting, @Nullable String iconName, @Nullable String color) {
         ButtonPref preference = new ButtonPref(context, iconName);
 
         if (color != null) {
@@ -65,7 +65,7 @@ public class Helper {
             preference.setTitle(title);
         }
         preference.setSummary(summary);
-        preference.setKey(setting.key);
+        preference.setKey(setting);
         return preference;
     }
 

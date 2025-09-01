@@ -53,11 +53,11 @@ public class ActivityHook {
 
         if (activity_name.equals(EXTRA_PIKO_SETTINGS)) {
             fragment = new SettingsFragment();
-        } else if (activity_name .equals( Settings.FEATURE_FLAGS.key) ){
+        } else if (activity_name .equals( Settings.FEATURE_FLAGS) ){
             fragment = new FeatureFlagsFragment();
-        } else if (activity_name .equals( Settings.PATCH_INFO.key)) {
+        } else if (activity_name .equals( Settings.PATCH_INFO)) {
             fragment = new SettingsAboutFragment();
-        }else if (activity_name .equals( ReaderModeUtils.READER_MODE_KEY) ){
+        }else if (activity_name .equals( Settings.READER_MODE_KEY) ){
             fragment = new ReaderModeFragment();
         }  else {
             fragment = new PageFragment();
@@ -75,11 +75,7 @@ public class ActivityHook {
         act.setContentView(Utils.getResourceIdentifier("preference_fragment_activity", "layout"));
         toolbar = act.findViewById(Utils.getResourceIdentifier("toolbar", "id"));
         toolbar.setNavigationIcon(Utils.getResourceIdentifier("ic_vector_arrow_left", "drawable"));
-        if( activity_name.equals( ReaderModeUtils.READER_MODE_KEY )){
-            toolbar.setTitle(Utils.getResourceString("piko_title_native_reader_mode"));
-        }else{
-            toolbar.setTitle(Utils.getResourceString("piko_title_settings"));
-        }
+        toolbar.setTitle(getTitle(activity_name));
         toolbar.setNavigationOnClickListener(view -> act.onBackPressed());
 
         FragmentTransaction transaction = act.getFragmentManager().beginTransaction().replace(Utils.getResourceIdentifier("fragment_container", "id"), fragment);
@@ -87,6 +83,34 @@ public class ActivityHook {
             transaction.addToBackStack(null);
         }
         transaction.commit();
+    }
+
+    private static String getTitle(String activity_name){
+        String toolbarText = "piko_title_settings";
+        if (activity_name.equals(Settings.PREMIUM_SECTION)) {
+            toolbarText = "piko_title_premium";
+        }else if (activity_name.equals(Settings.DOWNLOAD_SECTION)) {
+            toolbarText = "piko_title_download";
+        }else if (activity_name.equals(Settings.FLAGS_SECTION)) {
+            toolbarText = "piko_title_feature_flags";
+        }else if (activity_name.equals(Settings.ADS_SECTION)) {
+            toolbarText = "piko_title_ads";
+        }else if (activity_name.equals(Settings.MISC_SECTION)) {
+            toolbarText = "piko_title_misc";
+        }else if (activity_name.equals(Settings.CUSTOMISE_SECTION)) {
+            toolbarText = "piko_title_customisation";
+        }else if (activity_name.equals(Settings.TIMELINE_SECTION)) {
+            toolbarText = "piko_title_timeline";
+        }else if (activity_name.equals(Settings.BACKUP_SECTION)) {
+            toolbarText = "piko_title_backup";
+        }else if (activity_name.equals(Settings.NATIVE_SECTION)) {
+            toolbarText = "piko_title_native";
+        }else if (activity_name.equals(Settings.LOGGING_SECTION)) {
+            toolbarText = "piko_title_logging";
+        }else if (activity_name.equals(Settings.READER_MODE_KEY)) {
+            toolbarText = "piko_title_native_reader_mode";
+        }
+        return Utils.getResourceString(toolbarText);
     }
 
     public static void startActivity(String activity_name, Bundle bundle) throws Exception {
@@ -108,7 +132,7 @@ public class ActivityHook {
     public static void startReaderMode(String tweetId) throws Exception {
         Bundle bundle = new Bundle();
         bundle.putString(ReaderModeUtils.ARG_TWEET_ID, tweetId);
-        startActivity(ReaderModeUtils.READER_MODE_KEY, bundle);
+        startActivity(Settings.READER_MODE_KEY, bundle);
     }
 
     public static void startSettingsActivity() throws Exception {

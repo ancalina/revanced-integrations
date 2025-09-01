@@ -77,29 +77,29 @@ public class ButtonPref extends Preference {
                     String key = getKey();
                     Bundle bundle = new Bundle();
                     Fragment fragment = null;
-                    if (key.equals(Settings.EXPORT_PREF.key)) {
+                    if (key.equals(Settings.EXPORT_PREF)) {
                         bundle.putBoolean("featureFlag", false);
                         fragment = new BackupPrefFragment();
-                    } else if (key.equals(Settings.EXPORT_FLAGS.key)) {
+                    } else if (key.equals(Settings.EXPORT_FLAGS)) {
                         bundle.putBoolean("featureFlag", true);
                         fragment = new BackupPrefFragment();
-                    } else if (key.equals(Settings.IMPORT_PREF.key)) {
+                    } else if (key.equals(Settings.IMPORT_PREF)) {
                         bundle.putBoolean("featureFlag", false);
                         fragment = new RestorePrefFragment();
-                    } else if (key.equals(Settings.IMPORT_FLAGS.key)) {
+                    } else if (key.equals(Settings.IMPORT_FLAGS)) {
                         bundle.putBoolean("featureFlag", true);
                         fragment = new RestorePrefFragment();
-                    } else if (key.equals(Settings.PREMIUM_UNDO_POSTS.key)) {
+                    } else if (key.equals(Settings.PREMIUM_UNDO_POSTS)) {
                         Utils.startUndoPostActivity();
-                    } else if (key.equals(Settings.PREMIUM_ICONS.key)) {
+                    } else if (key.equals(Settings.PREMIUM_ICONS)) {
                         Utils.openUrl("https://www.x.com/settings/app_icon");
                     }  else if (key.equals(Settings.PREMIUM_NAVBAR.key)) {
                         Utils.openUrl("https://www.x.com/settings/custom_navigation");
-                    } else if (key.equals(Settings.RESET_PREF.key)) {
+                    } else if (key.equals(Settings.RESET_PREF)) {
                         Utils.deleteSharedPrefAB(context, false);
-                    } else if (key.equals(Settings.RESET_FLAGS.key)) {
+                    } else if (key.equals(Settings.RESET_FLAGS)) {
                         Utils.deleteSharedPrefAB(context, true);
-                    } else if (key.equals(Settings.ADS_DEL_FROM_DB.key)) {
+                    } else if (key.equals(Settings.ADS_DEL_FROM_DB)) {
                         DatabasePatch.showDialog(context);
                     } else {
                         ActivityHook.startActivity(key);

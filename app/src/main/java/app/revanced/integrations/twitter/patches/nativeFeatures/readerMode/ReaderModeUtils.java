@@ -27,7 +27,6 @@ import app.revanced.integrations.twitter.patches.nativeFeatures.readerMode.Reade
 public class ReaderModeUtils {
 
     private static final String THREADS_KEY = "threads";
-    public static final String READER_MODE_KEY = "readerMode";
     public static final String ARG_TWEET_ID = "tweet_id";
 
     public static final String NO_CONTENT = "<h3>No content specified</h3>";
