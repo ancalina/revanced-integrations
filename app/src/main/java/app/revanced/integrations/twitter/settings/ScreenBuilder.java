@@ -404,6 +404,13 @@ public class ScreenBuilder {
                             Settings.NATIVE_READER_MODE_NO_GROK
                     )
             );
+            addPreference(category,
+                    helper.buttonPreference(
+                            strRes("piko_native_reader_mode_cache_delete"),
+                            "",
+                            Settings.RESET_READER_MODE_CACHE
+                    )
+            );
 
         }
     }
