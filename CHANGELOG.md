@@ -1,3 +1,23 @@
+## [1.42.0-dev.1](https://github.com/crimera/revanced-integrations/compare/v1.41.0...v1.42.0-dev.1) (2025-09-02)
+
+
+### Bug Fixes
+
+* **Twitter:** fix model's toString methods ([3899c77](https://github.com/crimera/revanced-integrations/commit/3899c77071133ab2933b3dc8869657936240a824))
+* **Twitter:** Settings title loading issue and refactor logic ([fd0252a](https://github.com/crimera/revanced-integrations/commit/fd0252a299a7e542e169a635900a19475cf75e79))
+* **Twitter:** Settings title loading issue and refactor logic ([4e75e45](https://github.com/crimera/revanced-integrations/commit/4e75e45439696dffc9ef79c457bb315271120890))
+
+
+### Features
+
+* **Twitter:** Added 'Native reader mode' patch ([50580df](https://github.com/crimera/revanced-integrations/commit/50580df4cfacbb374c9d4b048efadf4702283774))
+
+
+### Refactors
+
+* **Twitter:** consolidate native features ([5909658](https://github.com/crimera/revanced-integrations/commit/590965882ca56ca48793321dc3a120c209093e8b))
+* **Twitter:** Moved to `models` approach ([5f8fc10](https://github.com/crimera/revanced-integrations/commit/5f8fc1092f361a1be89eef4c49e35bcf108d8f5c))
+
 ## [1.41.0](https://github.com/crimera/revanced-integrations/compare/v1.40.0...v1.41.0) (2025-08-11)
 
 
