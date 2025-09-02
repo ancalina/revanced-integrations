@@ -24,7 +24,7 @@ public class TweetInfo extends Debug {
     @Override
     public String toString() {
         try {
-            return "TweetInfo [getLang()=" + getLang() + "]";
+            return "TweetInfo [getLang()=" + this.getLang() + "]";
 
         } catch (Exception e) {
             Utils.logger(e);

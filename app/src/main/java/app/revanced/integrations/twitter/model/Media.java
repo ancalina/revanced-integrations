@@ -18,7 +18,7 @@ public class Media {
     public String toString() {
 
         try {
-            return "Media [type=" + type + ", url=" + url + ", ext=" + ext + "]";
+            return "Media [type=" + this.type + ", url=" + this.url + ", ext=" + this.ext + "]";
         } catch (Exception e) {
             Utils.logger(e);
             return e.getMessage();

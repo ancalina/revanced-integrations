@@ -55,8 +55,8 @@ public class ExtMediaEntities extends Debug{
     @Override
     public String toString(){
         try{
-        return "ExtMediaEntities [getImageUrl()=" + getImageUrl() + ", getHighResImageUrl()="
-                + getHighResImageUrl() + ", getHighResVideo()=" + getHighResVideo() + "]";
+        return "ExtMediaEntities [getImageUrl()=" + this.getImageUrl() + ", getHighResImageUrl()="
+                + this.getHighResImageUrl() + ", getHighResVideo()=" + this.getHighResVideo() + "]";
         }catch(Exception e){
             Utils.logger(e);
             return e.getMessage();

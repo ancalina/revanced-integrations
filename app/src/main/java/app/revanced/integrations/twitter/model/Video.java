@@ -53,9 +53,9 @@ public class Video extends Debug {
     @Override
     public String toString() {
         try {
-            return "Video [getBitrate()=" + getBitrate() + ", getMediaUrl()=" + getMediaUrl() + ", getCodec()="
-                    + getCodec()
-                    + ", getThumbnail()=" + getThumbnail() + ", getExtension()=" + getExtension() + "]";
+            return "Video [getBitrate()=" + this.getBitrate() + ", getMediaUrl()=" + this.getMediaUrl() + ", getCodec()="
+                    + this.getCodec()
+                    + ", getThumbnail()=" + this.getThumbnail() + ", getExtension()=" + this.getExtension() + "]";
 
         } catch (Exception e) {
             Utils.logger(e);

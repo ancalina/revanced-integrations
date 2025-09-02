@@ -114,10 +114,10 @@ public class Tweet extends Debug {
     @Override
     public String toString() {
         try {
-            return "Tweet [getTweetId()=" + getTweetId() + ", getTweetUsername()=" + getTweetUsername()
-                    + ", getTweetProfileName()=" + getTweetProfileName() + ", getTweetUserId()=" + getTweetUserId()
-                    + ", getMedias()=" + getMedias() + ", getTweetInfo()=" + getTweetInfo() + ", getTweetLang()="
-                    + getTweetLang() + ", getLongText()=" + getLongText() + ", getShortText()=" + getShortText() + "]";
+            return "Tweet [getTweetId()=" + this.getTweetId() + ", getTweetUsername()=" + this.getTweetUsername()
+                    + ", getTweetProfileName()=" + this.getTweetProfileName() + ", getTweetUserId()=" + this.getTweetUserId()
+                    + ", getMedias()=" + this.getMedias() + ", getTweetInfo()=" + this.getTweetInfo() + ", getTweetLang()="
+                    + this.getTweetLang() + ", getLongText()=" + this.getLongText() + ", getShortText()=" + this.getShortText() + "]";
 
         } catch (Exception e) {
             Utils.logger(e);
