@@ -17,6 +17,8 @@ import app.revanced.integrations.twitter.settings.ActivityHook;
 import app.revanced.integrations.twitter.settings.Settings;
 import app.revanced.integrations.twitter.settings.fragments.BackupPrefFragment;
 import app.revanced.integrations.twitter.settings.fragments.RestorePrefFragment;
+import app.revanced.integrations.twitter.patches.nativeFeatures.readerMode.ReaderModeUtils;
+
 
 public class ButtonPref extends Preference {
     private final Context context;
@@ -101,6 +103,8 @@ public class ButtonPref extends Preference {
                         Utils.deleteSharedPrefAB(context, true);
                     } else if (key.equals(Settings.ADS_DEL_FROM_DB)) {
                         DatabasePatch.showDialog(context);
+                    }else if (key.equals(Settings.RESET_READER_MODE_CACHE)) {
+                        ReaderModeUtils.clearCache();
                     } else {
                         ActivityHook.startActivity(key);
                     }

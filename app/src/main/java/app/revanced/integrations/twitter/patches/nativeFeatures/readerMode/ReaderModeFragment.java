@@ -1,5 +1,7 @@
 package app.revanced.integrations.twitter.patches.nativeFeatures.readerMode;
 
+
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +18,29 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import app.revanced.integrations.shared.StringRef;
+import android.webkit.JavascriptInterface;
 
 public class ReaderModeFragment extends Fragment {
 
     private WebView webView;
 
     private String tweetId;
+
+     // JavaScript interface class
+    public class WebAppInterface {
+        Context mContext;
+
+        WebAppInterface(Context context) {
+            mContext = context;
+        }
+
+        @JavascriptInterface
+        public void copyText(String text) {
+            Utils.setClipboard(text);
+            Utils.showToastShort(StringRef.str("link_copied_to_clipboard"));
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +65,7 @@ public class ReaderModeFragment extends Fragment {
 
         webView = rootView.findViewById(Utils.getResourceIdentifier("webview", "id"));
         webView.getSettings().setJavaScriptEnabled(true);
+         webView.addJavascriptInterface(new WebAppInterface(getContext()), "Android");
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
 

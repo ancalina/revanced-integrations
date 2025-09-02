@@ -45,7 +45,12 @@ public class DeepLink {
                     return true;
 
                 }
-            }else if (isPiko) {
+            }else if(mainPath.equals("status")){
+                String tweetId = deeplinkSegments.get(2);
+                ActivityHook.startReaderMode(tweetId);
+                return true;
+            }
+            else if (isPiko) {
                 if(lastSegment.equals("premium")){
                     key = Settings.PREMIUM_SECTION;
                 } else if (lastSegment.equals("download")) {

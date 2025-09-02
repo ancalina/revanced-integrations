@@ -101,17 +101,8 @@ public class Settings extends BaseSettings {
     public static final String RESET_PREF = "reset_pref";
     public static final String RESET_FLAGS = "reset_flags";
     public static final String FEATURE_FLAGS = "feature_flags";
+    public static final String RESET_READER_MODE_CACHE = "reader_mode_cache";
 
-//    public static final BooleanSetting PREMIUM_SECTION = new BooleanSetting("premium_section", true);
-//    public static final BooleanSetting DOWNLOAD_SECTION = new BooleanSetting("download_section", true);
-//    public static final BooleanSetting FLAGS_SECTION = new BooleanSetting("flags_section", true);
-//    public static final BooleanSetting ADS_SECTION = new BooleanSetting("ads_section", true);
-//    public static final BooleanSetting MISC_SECTION = new BooleanSetting("misc_section", true);
-//    public static final BooleanSetting CUSTOMISE_SECTION = new BooleanSetting("custommise_section", true);
-//    public static final BooleanSetting TIMELINE_SECTION = new BooleanSetting("timeline_section", true);
-//    public static final BooleanSetting LOGGING_SECTION = new BooleanSetting("logging_section", true);
-//    public static final BooleanSetting BACKUP_SECTION = new BooleanSetting("backup_section", true);
-//    public static final BooleanSetting NATIVE_SECTION = new BooleanSetting("native_section", true);
     public static final String PREMIUM_SECTION = "premium_section";
     public static final String DOWNLOAD_SECTION = "download_section";
     public static final String FLAGS_SECTION = "flags_section";

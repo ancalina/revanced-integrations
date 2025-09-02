@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import app.revanced.integrations.twitter.settings.ActivityHook;
 import app.revanced.integrations.twitter.Utils;
 import app.revanced.integrations.twitter.Pref;
-
+import app.revanced.integrations.shared.StringRef;
 import java.io.File;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -82,11 +82,8 @@ public class ReaderModeUtils {
         Boolean textOnlyMode = Pref.hideNativeReaderPostTextOnlyMode();
         Boolean hideQuotedPosts = Pref.hideNativeReaderHideQuotedPosts();
         Boolean noGrok = Pref.hideNativeReaderNoGrok();
-        int theme = Utils.getTheme();
-        String themeClass = (theme == 0?"":(theme==1?"dark":"dim"));
-        return "document.body.className='';\n" +
-                "\ndocument.body.classList.add(\""+themeClass+"\");\n"+
-                "if(" + hideQuotedPosts + "){\n" +
+
+        return "if(" + hideQuotedPosts + "){\n" +
                 "var nodes = document.querySelectorAll(\".quoted-section\");\n" +
                 "nodes.forEach(n=>n.style.display='none');\n" +
                 "}\n" +
@@ -100,9 +97,8 @@ public class ReaderModeUtils {
                 "}";
     }
 
-
     public static void launchReaderMode(Context activity, Object tweet) throws Exception {
-        String tweetId = ""+new Tweet(tweet).getTweetId();
+        String tweetId = "" + new Tweet(tweet).getTweetId();
         ActivityHook.startReaderMode(tweetId);
         return;
     }
@@ -142,14 +138,36 @@ public class ReaderModeUtils {
         }
     }
 
-    private static File cacheFileDir(String tweetId) {
+    private static File cacheDir() {
         File cacheDir = ctx.getCacheDir();
         File threadsDir = new File(cacheDir, "Threads");
 
         if (!threadsDir.exists()) {
             threadsDir.mkdirs();
         }
-        return new File(threadsDir, THREADS_KEY + "_" + tweetId + ".html");
+        return threadsDir;
+    }
+
+    private static File cacheFileDir(String tweetId) {
+        return new File(cacheDir(), THREADS_KEY + "_" + tweetId + ".html");
+    }
+
+    public static void clearCache() {
+        File dir = cacheDir();
+        boolean deleted = true;
+        if (dir != null && dir.isDirectory()) {
+            File[] children = dir.listFiles();
+            if (children != null) {
+                for (File child : children) {
+                    deleted = deleted && child.delete();
+                }
+            }
+        }
+        if (deleted) {
+            Utils.toast(StringRef.str("piko_native_reader_mode_cache_delete_success"));
+        } else {
+            Utils.toast(StringRef.str("piko_native_reader_mode_cache_delete_failed"));
+        }
     }
 
     private static boolean writeCacheFile(String tweetId, String data) {
@@ -171,25 +189,43 @@ public class ReaderModeUtils {
     }
 
     public static String buildHtml(String tweetId) {
+        // 0 = light, 1 = dark, 2 = dim
         String html = "";
+        String defThemeClass = "{themeClassName}";
+        String themeClass = defThemeClass;
+        int theme = Utils.getTheme();
+        switch(theme){
+            case 1:{
+                themeClass = "dark";
+                break;
+            }case 2:{
+                themeClass = "dim";
+                break;
+            }default:{
+                themeClass = defThemeClass;
+            }
+        }
         try {
             html = readCacheFile(tweetId);
-            if (html != null)
-                return html;
-            JSONObject threadInfo = getThreadInfo(tweetId);
-            if (threadInfo != null) {
-                html = ReaderModeTemplate.generateHtml(threadInfo);
-                writeCacheFile(tweetId, html);
+            if (html == null) {
+                JSONObject threadInfo = getThreadInfo(tweetId);
+                if (threadInfo != null) {
+                    html = ReaderModeTemplate.generateHtml(threadInfo);
+                    writeCacheFile(tweetId, html);
+                }else{
+                    html = ReaderModeTemplate.generateHtml(NO_CONTENT);                    
+                }
             }
         } catch (Exception e) {
             html = ReaderModeTemplate.generateHtml(e.getMessage());
         }
+        html = html.replace(defThemeClass, themeClass);
         return html;
     }
 
     public static String injectJS() {
         return "(function() {" +
-                fontSize() +  preferenceJS()+
+                fontSize() + preferenceJS() +
                 "})();";
     }
 
