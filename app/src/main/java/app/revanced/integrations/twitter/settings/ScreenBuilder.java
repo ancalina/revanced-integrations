@@ -8,7 +8,6 @@ import android.preference.PreferenceScreen;
 import android.preference.Preference;
 import androidx.annotation.Nullable;
 import app.revanced.integrations.shared.Utils;
-import app.revanced.integrations.shared.settings.BooleanSetting;
 import app.revanced.integrations.shared.settings.StringSetting;
 import com.twitter.ui.widget.LegacyTwitterPreferenceCategory;
 import android.view.View;
@@ -77,7 +76,7 @@ public class ScreenBuilder {
                         helper.buttonPreference(
                                 strRes("piko_pref_undo_posts_btn"),
                                 "",
-                                Settings.PREMIUM_UNDO_POSTS
+                                Settings.PREMIUM_UNDO_POSTS.key
                         )
                 );
             }
@@ -87,7 +86,7 @@ public class ScreenBuilder {
                         helper.buttonPreference(
                                 strRes("app_icon"),
                                 "",
-                                Settings.PREMIUM_ICONS
+                                Settings.PREMIUM_ICONS.key
                         )
                 );
             }
@@ -97,7 +96,7 @@ public class ScreenBuilder {
                     helper.buttonPreference(
                             strRes("tab_customization_screen_title"),
                             "",
-                            Settings.PREMIUM_NAVBAR
+                            Settings.PREMIUM_NAVBAR.key
                     )
             );
         }
@@ -299,7 +298,7 @@ public class ScreenBuilder {
                     helper.buttonPreference(
                             strRes("piko_pref_del_from_db"),
                             "",
-                            Settings.ADS_DEL_FROM_DB,
+                            Settings.ADS_DEL_FROM_DB.key,
                             null,
                             "#DE0025"
                     )
@@ -368,6 +367,48 @@ public class ScreenBuilder {
                             strRes("piko_native_translator_to_lang"),
                             Pref.translatorLanguage(),
                             Settings.NATIVE_TRANSLATOR_LANG
+                    )
+            );
+
+        }
+
+        category = preferenceCategory(strRes("piko_title_native_reader_mode"));
+
+        if (SettingsStatus.nativeReaderMode) {
+            addPreference(category,
+                    helper.switchPreference(
+                            strRes("piko_title_native_reader_mode"),
+                            "",
+                            Settings.NATIVE_READER_MODE
+                    )
+            );
+
+            addPreference(category,
+                    helper.switchPreference(
+                            strRes("piko_native_reader_mode_pref_text_only_mode"),
+                            "",
+                            Settings.NATIVE_READER_MODE_TEXT_ONLY_MODE
+                    )
+            );
+            addPreference(category,
+                    helper.switchPreference(
+                            strRes("piko_native_reader_mode_pref_hide_quoted_posts"),
+                            "",
+                            Settings.NATIVE_READER_MODE_HIDE_QUOTED_POST
+                    )
+            );
+            addPreference(category,
+                    helper.switchPreference (
+                            strRes("piko_native_reader_mode_pref_no_grok"),
+                            "",
+                            Settings.NATIVE_READER_MODE_NO_GROK
+                    )
+            );
+            addPreference(category,
+                    helper.buttonPreference(
+                            strRes("piko_native_reader_mode_cache_delete"),
+                            "",
+                            Settings.RESET_READER_MODE_CACHE
                     )
             );
 

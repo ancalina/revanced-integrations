@@ -7,6 +7,7 @@ import app.revanced.integrations.shared.Utils;
 
 public class Settings extends BaseSettings {
     public static final String SHARED_PREF_NAME = "piko_settings";
+    public static final String ACT_NAME = "activity_name";
 
     public static final StringSetting VID_PUBLIC_FOLDER = new StringSetting("vid_public_folder", "Movies");
     public static final StringSetting VID_SUBFOLDER = new StringSetting("vid_subfolder", "Twitter");
@@ -49,6 +50,10 @@ public class Settings extends BaseSettings {
     public static final BooleanSetting NATIVE_TRANSLATOR = new BooleanSetting("native_translator", true);
     public static final StringSetting NATIVE_TRANSLATOR_PROVIDERS = new StringSetting("native_translator_providers", "0");
     public static final StringSetting NATIVE_TRANSLATOR_LANG = new StringSetting("native_translator_language", "en");
+    public static final BooleanSetting NATIVE_READER_MODE = new BooleanSetting("native_reader_mode", true);
+    public static final BooleanSetting NATIVE_READER_MODE_TEXT_ONLY_MODE = new BooleanSetting("native_reader_mode_text_only_mode", false);
+    public static final BooleanSetting NATIVE_READER_MODE_HIDE_QUOTED_POST = new BooleanSetting("native_reader_mode_hide_quoted_post", false);
+    public static final BooleanSetting NATIVE_READER_MODE_NO_GROK = new BooleanSetting("native_reader_mode_no_grok", false);
 
     public static final BooleanSetting TIMELINE_DISABLE_AUTO_SCROLL = new BooleanSetting("timeline_disable_auto_scroll", true);
     public static final BooleanSetting TIMELINE_SHOW_SOURCE_LABEL = new BooleanSetting("timeline_show_source_label", false);
@@ -88,24 +93,27 @@ public class Settings extends BaseSettings {
     public static final BooleanSetting LOG_RES = new BooleanSetting("logging_response", false);
     public static final BooleanSetting LOG_RES_OVRD = new BooleanSetting("logging_response_overwrite_file", false);
 
-    public static final BooleanSetting EXPORT_PREF = new BooleanSetting("export_pref", true);
-    public static final BooleanSetting EXPORT_FLAGS = new BooleanSetting("export_flags", true);
-    public static final BooleanSetting IMPORT_PREF = new BooleanSetting("import_pref", true);
-    public static final BooleanSetting IMPORT_FLAGS = new BooleanSetting("import_flags", true);
-    public static final BooleanSetting PATCH_INFO = new BooleanSetting("patch_info", true);
-    public static final BooleanSetting RESET_PREF = new BooleanSetting("reset_pref", true);
-    public static final BooleanSetting RESET_FLAGS = new BooleanSetting("reset_flags", true);
-    public static final BooleanSetting FEATURE_FLAGS = new BooleanSetting("feature_flags", true);
+    public static final String EXPORT_PREF = "export_pref";
+    public static final String EXPORT_FLAGS = "export_flags";
+    public static final String IMPORT_PREF = "import_pref";
+    public static final String IMPORT_FLAGS = "import_flags";
+    public static final String PATCH_INFO = "patch_info";
+    public static final String RESET_PREF = "reset_pref";
+    public static final String RESET_FLAGS = "reset_flags";
+    public static final String FEATURE_FLAGS = "feature_flags";
+    public static final String RESET_READER_MODE_CACHE = "reader_mode_cache";
 
-    public static final BooleanSetting PREMIUM_SECTION = new BooleanSetting("premium_section", true);
-    public static final BooleanSetting DOWNLOAD_SECTION = new BooleanSetting("download_section", true);
-    public static final BooleanSetting FLAGS_SECTION = new BooleanSetting("flags_section", true);
-    public static final BooleanSetting ADS_SECTION = new BooleanSetting("ads_section", true);
-    public static final BooleanSetting MISC_SECTION = new BooleanSetting("misc_section", true);
-    public static final BooleanSetting CUSTOMISE_SECTION = new BooleanSetting("custommise_section", true);
-    public static final BooleanSetting TIMELINE_SECTION = new BooleanSetting("timeline_section", true);
-    public static final BooleanSetting LOGGING_SECTION = new BooleanSetting("logging_section", true);
-    public static final BooleanSetting BACKUP_SECTION = new BooleanSetting("backup_section", true);
-    public static final BooleanSetting NATIVE_SECTION = new BooleanSetting("native_section", true);
+    public static final String PREMIUM_SECTION = "premium_section";
+    public static final String DOWNLOAD_SECTION = "download_section";
+    public static final String FLAGS_SECTION = "flags_section";
+    public static final String ADS_SECTION = "ads_section";
+    public static final String MISC_SECTION = "misc_section";
+    public static final String CUSTOMISE_SECTION = "custommise_section";
+    public static final String TIMELINE_SECTION = "timeline_section";
+    public static final String LOGGING_SECTION = "logging_section";
+    public static final String BACKUP_SECTION = "backup_section";
+    public static final String NATIVE_SECTION = "native_section";
+    public static final String READER_MODE_KEY = "readerMode";
+
     public static final BooleanSetting SINGLE_PAGE_SETTINGS = new BooleanSetting("single_page_settings", false);
 }

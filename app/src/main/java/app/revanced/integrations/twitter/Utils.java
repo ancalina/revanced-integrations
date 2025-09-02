@@ -1,5 +1,6 @@
 package app.revanced.integrations.twitter;
 
+import app.revanced.integrations.twitter.model.Debug;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
@@ -22,28 +23,36 @@ import com.google.android.material.tabs.TabLayout$g;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.FileOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+
+import java.lang.StackTraceElement;
 
 @SuppressWarnings("unused")
 public class Utils {
     @SuppressLint("StaticFieldLeak")
     private static final Context ctx = app.revanced.integrations.shared.Utils.getContext();
     private static final SharedPrefCategory sp = new SharedPrefCategory(Settings.SHARED_PREF_NAME);
+    private static final SharedPrefCategory defsp = new SharedPrefCategory(ctx.getPackageName() + "_preferences");
 
     public static void openUrl(String url) {
-        Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setPackage(ctx.getPackageName());
         ctx.startActivity(intent);
     }
 
-    public static void openDefaultLinks(){
+    public static void openDefaultLinks() {
         Intent intent = new Intent(android.provider.Settings.ACTION_APP_OPEN_BY_DEFAULT_SETTINGS);
-        intent.setData(Uri.parse("package:"+ctx.getPackageName()));
+        intent.setData(Uri.parse("package:" + ctx.getPackageName()));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ctx.startActivity(intent);
     }
@@ -73,7 +82,6 @@ public class Utils {
         startActivityFromClassName(className);
     }
 
-
     private static void startBookmarkActivity() {
         String className = "com.twitter.app.bookmarks.legacy.BookmarkActivity";
         startActivityFromClassName(className);
@@ -84,7 +92,7 @@ public class Utils {
         startActivityFromClassName(className);
     }
 
-    //thanks to @Ouxyl
+    // thanks to @Ouxyl
     public static boolean redirect(TabLayout$g g) {
         try {
             String tabName = g.c.toString();
@@ -249,8 +257,8 @@ public class Utils {
         return publicFolder + "/" + subFolder + "/" + filename;
     }
 
-
-    private static void postDownload(String filename, File tempFile, File file, Intent intent, long downloadId, BroadcastReceiver broadcastReceiver) {
+    private static void postDownload(String filename, File tempFile, File file, Intent intent, long downloadId,
+            BroadcastReceiver broadcastReceiver) {
         long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
         if (id == downloadId) {
             boolean result = tempFile.renameTo(file);
@@ -293,8 +301,7 @@ public class Utils {
 
         File tempFile = new File(
                 Environment.getExternalStorageDirectory(),
-                getPath(publicFolder, subFolder, "temp_" + filename)
-        );
+                getPath(publicFolder, subFolder, "temp_" + filename));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ctx.registerReceiver(new BroadcastReceiver() {
@@ -313,13 +320,99 @@ public class Utils {
         }
     }
 
+    public static int getTheme() {
+        // 0 = light, 1 = dark, 2 = dim
+        int theme = 0;
+        String three_state_night_mode = defsp.getString("three_state_night_mode", String.valueOf(theme));
+        if (!(three_state_night_mode.equals("0"))) {
+            String dark_mode_appr = defsp.getString("dark_mode_appearance", "lights_out");
+            if (dark_mode_appr.equals("lights_out"))
+                theme = 1;
+            else if (dark_mode_appr.equals("dim"))
+                theme = 2;
+        }
+        return theme;
+    }
+
+    public static boolean pikoWriteFile(String fileName,String data,boolean append){
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File pikoDir = new File(downloadsDir, "Piko");
+
+        if (!pikoDir.exists()) {
+            pikoDir.mkdirs();
+        }
+
+        File outputFile = new File(pikoDir, fileName);
+        return writeFile(outputFile,data.getBytes(),append);
+    }
+
+    public static boolean writeFile(File fileName, byte[] data, boolean append) {
+        try {
+            FileOutputStream outputStream = new FileOutputStream(fileName, append);
+            outputStream.write(data);
+            outputStream.close();
+            return true;
+        } catch (Exception e) {
+            logger(e.toString());
+        }
+        return false;
+    }
+
+    public static String readFile(File fileName) {
+        try {
+            if (!fileName.exists())
+                return null;
+
+            StringBuilder content = new StringBuilder();
+            BufferedReader reader = null;
+            try {
+                reader = new BufferedReader(new FileReader(fileName));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    content.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException ignored) {
+                    }
+                }
+            }
+            return content.toString();
+        } catch (Exception e) {
+            logger(e.toString());
+        }
+        return null;
+    }
+
     public static void toast(String msg) {
         app.revanced.integrations.shared.Utils.showToastShort(msg);
     }
 
-    public static void logger(Object j) {
-        Log.d("piko", j.toString());
+    public static void logger(Object e) {
+        String logName = "piko";
+        Log.d(logName, String.valueOf(e)+"\n");
+        if (e instanceof Exception) {
+            Exception ex = (Exception) e;
+        StackTraceElement[] stackTraceElements = ex.getStackTrace();
+            for (StackTraceElement element : stackTraceElements) {
+                Log.d(logName, "Exception occurred at line " + element.getLineNumber() + " in " + element.getClassName()
+                        + "." + element.getMethodName());
+            }
+        }
     }
 
+    /*** THIS FUNCTION SHOULD BE USED ONLY WHILE DEVELOPMENT ***/
+    public static void debugClass(Object obj) {
+        Debug cls = new Debug(obj);
+        try{
+        cls.describeClass();
+        }catch(Exception e){
+            logger(e);
+        }
+    }
 
 }
