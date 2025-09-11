@@ -1,3 +1,11 @@
+## [1.42.0-dev.2](https://github.com/crimera/revanced-integrations/compare/v1.42.0-dev.1...v1.42.0-dev.2) (2025-09-11)
+
+
+### Updates
+
+* add native reader mode on `Patch Information` screen ([3c7526b](https://github.com/crimera/revanced-integrations/commit/3c7526b21930d10dcfd8ef8f7926ff13500f9188))
+* Remove old `Enable reader mode` patch ([a362f82](https://github.com/crimera/revanced-integrations/commit/a362f823c15cf0b0fd9a8b75006d1278aadab4ff))
+
 ## [1.42.0-dev.1](https://github.com/crimera/revanced-integrations/compare/v1.41.0...v1.42.0-dev.1) (2025-09-02)
 
 
