@@ -132,6 +132,7 @@ public class SettingsAboutFragment extends PreferenceFragment implements Prefere
         flags.put(strRemoveRes("piko_pref_hide_todays_news"),SettingsStatus.hideTodaysNews);
         flags.put(strRemoveRes("piko_pref_server_response_logging"),SettingsStatus.serverResponseLogging);
         flags.put(strRes("piko_pref_show_post_source"),SettingsStatus.showSourceLabel);
+        flags.put(strRes("piko_title_native_reader_mode"),SettingsStatus.nativeReaderMode);
 
         LegacyTwitterPreferenceCategory patPref = preferenceCategory(strRes("piko_pref_patches"), screen);
 
