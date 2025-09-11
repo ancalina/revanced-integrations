@@ -66,7 +66,7 @@ public class SettingsAboutFragment extends PreferenceFragment implements Prefere
 
         TreeMap<String,Boolean> flags = new TreeMap();
         flags.put(strEnableRes("piko_pref_video_download"),SettingsStatus.enableVidDownload);
-        flags.put(strEnableRes("piko_pref_reader_mode"),SettingsStatus.enableReaderMode);
+        flags.put(strEnableRes("piko_pref_reader_mode"),SettingsStatus.nativeReaderMode);
         flags.put(strEnableRes("piko_pref_undo_posts"),SettingsStatus.enableUndoPosts);
         flags.put(strRes("app_icon"),SettingsStatus.customAppIcon);
         flags.put(strRes("tab_customization_screen_title"),SettingsStatus.navBarCustomisation);
@@ -132,7 +132,6 @@ public class SettingsAboutFragment extends PreferenceFragment implements Prefere
         flags.put(strRemoveRes("piko_pref_hide_todays_news"),SettingsStatus.hideTodaysNews);
         flags.put(strRemoveRes("piko_pref_server_response_logging"),SettingsStatus.serverResponseLogging);
         flags.put(strRes("piko_pref_show_post_source"),SettingsStatus.showSourceLabel);
-        flags.put(strRes("piko_title_native_reader_mode"),SettingsStatus.nativeReaderMode);
 
         LegacyTwitterPreferenceCategory patPref = preferenceCategory(strRes("piko_pref_patches"), screen);
 
