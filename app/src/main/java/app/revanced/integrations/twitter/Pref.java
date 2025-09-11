@@ -58,6 +58,20 @@ public class Pref {
         return Utils.getBooleanPerf(Settings.NATIVE_TRANSLATOR);
     }
 
+    public static boolean enableNativeReaderMode() {
+        return Utils.getBooleanPerf(Settings.NATIVE_READER_MODE);
+    }
+    public static boolean hideNativeReaderPostTextOnlyMode() {
+        return Utils.getBooleanPerf(Settings.NATIVE_READER_MODE_TEXT_ONLY_MODE);
+    }
+    public static boolean hideNativeReaderHideQuotedPosts() {
+        return Utils.getBooleanPerf(Settings.NATIVE_READER_MODE_HIDE_QUOTED_POST);
+    }
+
+    public static boolean hideNativeReaderNoGrok() {
+        return Utils.getBooleanPerf(Settings.NATIVE_READER_MODE_NO_GROK);
+    }
+
     public static String translatorLanguage() {
         return Utils.getStringPref(Settings.NATIVE_TRANSLATOR_LANG);
     }

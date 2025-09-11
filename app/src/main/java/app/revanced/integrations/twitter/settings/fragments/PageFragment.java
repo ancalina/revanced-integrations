@@ -37,39 +37,28 @@ public class PageFragment extends PreferenceFragment {
         ScreenBuilder screenBuilder = new ScreenBuilder(context, screen, helper);
 
         Bundle bundle = getArguments();
-        if (bundle.getBoolean(Settings.PREMIUM_SECTION.key, false)) {
+        String activity_name = bundle != null ? bundle.getString(Settings.ACT_NAME) : null;
+        if (activity_name.equals(Settings.PREMIUM_SECTION)) {
             screenBuilder.buildPremiumSection(false);
-            toolbarText = "piko_title_premium";
-        }else if (bundle.getBoolean(Settings.DOWNLOAD_SECTION.key, false)) {
+        }else if (activity_name.equals(Settings.DOWNLOAD_SECTION)) {
             screenBuilder.buildDownloadSection(false);
-            toolbarText = "piko_title_download";
-        }else if (bundle.getBoolean(Settings.FLAGS_SECTION.key, false)) {
+        }else if (activity_name.equals(Settings.FLAGS_SECTION)) {
             screenBuilder.buildFeatureFlagsSection(false);
-            toolbarText = "piko_title_feature_flags";
-        }else if (bundle.getBoolean(Settings.ADS_SECTION.key, false)) {
+        }else if (activity_name.equals(Settings.ADS_SECTION)) {
             screenBuilder.buildAdsSection(false);
-            toolbarText = "piko_title_ads";
-        }else if (bundle.getBoolean(Settings.MISC_SECTION.key, false)) {
+        }else if (activity_name.equals(Settings.MISC_SECTION)) {
             screenBuilder.buildMiscSection(false);
-            toolbarText = "piko_title_misc";
-        }else if (bundle.getBoolean(Settings.CUSTOMISE_SECTION.key, false)) {
+        }else if (activity_name.equals(Settings.CUSTOMISE_SECTION)) {
             screenBuilder.buildCustomiseSection(false);
-            toolbarText = "piko_title_customisation";
-        }else if (bundle.getBoolean(Settings.TIMELINE_SECTION.key, false)) {
+        }else if (activity_name.equals(Settings.TIMELINE_SECTION)) {
             screenBuilder.buildTimelineSection(false);
-            toolbarText = "piko_title_timeline";
-        }else if (bundle.getBoolean(Settings.BACKUP_SECTION.key, false)) {
+        }else if (activity_name.equals(Settings.BACKUP_SECTION)) {
             screenBuilder.buildExportSection(false);
-            toolbarText = "piko_title_backup";
-        }else if (bundle.getBoolean(Settings.NATIVE_SECTION.key, false)) {
+        }else if (activity_name.equals(Settings.NATIVE_SECTION)) {
             screenBuilder.buildNativeSection(false);
-            toolbarText = "piko_title_native";
-        }else if (bundle.getBoolean(Settings.LOGGING_SECTION.key, false)) {
+        }else if (activity_name.equals(Settings.LOGGING_SECTION)) {
             screenBuilder.buildLoggingSection(false);
-            toolbarText = "piko_title_logging";
         }
-
-        ActivityHook.toolbar.setTitle(StringRef.str(toolbarText));
 //        setSupportActionBar(ActivityHook.toolbar);
         setPreferenceScreen(screen);
 

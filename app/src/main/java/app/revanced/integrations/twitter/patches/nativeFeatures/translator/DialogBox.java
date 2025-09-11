@@ -1,4 +1,4 @@
-package app.revanced.integrations.twitter.patches.translator;
+package app.revanced.integrations.twitter.patches.nativeFeatures.translator;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.FileOutputStream;
 import android.os.Environment;
 
 import app.revanced.integrations.twitter.Pref;
@@ -17,7 +16,7 @@ public class ResponseLogger {
     static{
         LOG_RES = Pref.serverResponseLogging();
         if(Pref.serverResponseLoggingOverwriteFile()){
-            writeFile("".getBytes(),false);
+            writeFile("",false);
 //            Utils.logger("Cleared response log file!!!");
         }
     }
@@ -33,34 +32,17 @@ public class ResponseLogger {
         }
         sb.append("\n");
         inputStream.close();
-        byte[] contentBytes = sb.toString().getBytes();
+        String contentBytes = sb.toString();
         if(!(sb.indexOf("session_token") == 2 || sb.indexOf("guest_token") == 2)){
             writeFile(contentBytes,true);
          }
 
-        return new ByteArrayInputStream(contentBytes);
+        return new ByteArrayInputStream(contentBytes.getBytes());
     }
 
-    private static boolean writeFile(byte[] data,boolean append){
-        try {
-            File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-            File pikoDir = new File(downloadsDir, "Piko");
-
-            if (!pikoDir.exists()) {
-                pikoDir.mkdirs();
-            }
-
-            File outputFile = new File(pikoDir, "Server-Response-Log.txt");
-
-            FileOutputStream outputStream = new FileOutputStream(outputFile, append);
-            outputStream.write(data);
-            outputStream.close();
-            return true;
-        }catch (Exception e){
-            Utils.logger(e.toString());
-        }
-
-        return false;
+    private static boolean writeFile(String data,boolean append){
+        String fileName = "Server-Response-Log.txt";
+        return Utils.pikoWriteFile(fileName,data,append);
     }
 
 }
