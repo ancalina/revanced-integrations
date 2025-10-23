@@ -1,58 +1,45 @@
-name: Release
+name: Build revanced-integrations (APK)
 
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - main
-      - dev
-      
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
 
 jobs:
-  release:
-    name: Release
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout (this repo)
         uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
         with:
-          # Make sure the release step uses its own credentials:
-          # https://github.com/cycjimmy/semantic-release-action#private-packages
-          persist-credentials: false
-          fetch-depth: 0
+          distribution: temurin
+          java-version: "17"
 
-      - name: Cache Gradle
-        uses: burrunan/gradle-cache-action@v1
+      - name: Set up Gradle cache
+        uses: gradle/actions/setup-gradle@v3
 
-      - name: Setup Java
-        run: echo "JAVA_HOME=$JAVA_HOME_17_X64" >> $GITHUB_ENV
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew build clean
+      - name: Install Android SDK components
+        run: |
+          sdkmanager --install "platforms;android-34" "build-tools;34.0.0" "platform-tools"
+          yes | sdkmanager --licenses
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Build (APK)
+        run: |
+          chmod +x ./gradlew || true
+          ./gradlew --no-daemon :app:assembleRelease
+
+      - name: Upload artifact (integrations APK)
+        uses: actions/upload-artifact@v4
         with:
-          node-version: "lts/*"
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Import GPG key
-        uses: crazy-max/ghaction-import-gpg@v6
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
-          fingerprint: ${{ env.GPG_FINGERPRINT }}
-
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm exec semantic-release
+          name: revanced-integrations-apk
+          path: app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 14
